@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hockey Stick</title>
+    <style>
+        body {
+          background-image: url('Задний фон.jpg');
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+        }
+
+        h1 {
+            text-align: center;
+            #002137;
+        }
+
+
+        .product {
+          padding: 20px;
+          margin: 10px;
+          text-align: center;
+          float: left;
+          width: 300px;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 300px;
+            margin-top: 100px;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+
+
+        }
+
+        .product-name {
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 20px;
+            color: #ff1919;
+            font-weight: bold;
+        }
+
+        .cart {
+            margin-top: 5px;
+            padding: 5px;
+            max-width: 500px;
+            position: absolute;
+            top: 5px;
+            left: 10px;
+        }
+
+        .cart h2 {
+            font-size: 18px;
+            color: #002137;
+            margin: 0 0 10px;
+        }
+
+        .cart-items {
+            max-height: 200px;
+            overflow-y: scroll;
+        }
+
+        .cart-item {
+            margin-bottom: 5px;
+        }
+
+        .total-price {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Hockey Stick</h1>
+
+<div class="products-container">
+    <div th:each="product : ${products}" class="product">
+        <div class="product-image" th:style="'background-image: url(' + ${product.imagePath} + ')'"></div>
+        <a class="product-name" style="color: black;" th:href="@{/product/{name}(name=${product.name})}" th:text="${product.name}"></a>
+        <div class="product-price" th:text="${product.price} +'Р'"></div>
+        <button onclick="addToCart(this.parentNode.querySelector('.product-name').textContent, this.parentNode.querySelector('.product-price').textContent)">Добавить в корзину</button>
+    </div>
+</div>
+
+<div class="cart">
+    <h2>Корзина</h2>
+    <img style="width: 40px; height: 40px;" src="Корзина.png" alt="Cart">
+    <div class="cart-items"></div>
+    <div class="total-price"></div>
+</div>
+
+<script>
+    var cartItems = [];
+    var cartItemsContainer = document.querySelector('.cart-items');
+    var totalPriceContainer = document.querySelector('.total-price');
+
+
+    function addToCart(name, price) {
+        cartItems.push({ name: name, price: parseFloat(price.replace('Р', '')) });
+        updateCart();
+    }
+
+
+    function updateCart() {
+        var cartHTML = '';
+        var totalPrice = 0;
+
+        for (var i = 0; i < cartItems.length; i++) {
+            cartHTML += '<div class="cart-item">' + cartItems[i].name + ' - Р' + cartItems[i].price + '</div>';
+            totalPrice += cartItems[i].price;
+        }
+
+        cartItemsContainer.innerHTML = cartHTML;
+        totalPriceContainer.innerHTML = 'Итого:' + totalPrice+'Р';
+    }
+</script>
+</body>
+</html>

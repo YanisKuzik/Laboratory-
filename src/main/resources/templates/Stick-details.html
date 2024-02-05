@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stick details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .product-image {
+            width: 300px;
+            height: 300px;
+            margin-bottom: 20px;
+            background-color: #ddd;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .product-price {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1 th:text="${product.name}"></h1>
+<div class="product-image" th:style="'background-image: url(' + ${product.imagePath} + ')'"></div>
+<div class="product-price" th:text="'Цена: Р' + ${product.price}"></div>
+</body>
+</html>
